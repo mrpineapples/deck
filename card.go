@@ -93,10 +93,6 @@ func absRank(c Card) int {
 	return int(c.Suit)*int(maxRank) + int(c.Rank)
 }
 
-type Permer interface {
-	Perm(n int) []int
-}
-
 var shuffleRand = rand.New(rand.NewSource(time.Now().Unix()))
 
 func Shuffle(cards []Card) []Card {
