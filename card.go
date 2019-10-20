@@ -9,10 +9,10 @@ import (
 	"time"
 )
 
-// Suit represents a cards suit such as Spade or Diamond
+// Suit represents a cards suit such as Spade or Diamond.
 type Suit uint8
 
-// Suits with integer values
+// Suits with integer values.
 const (
 	Spade Suit = iota
 	Diamond
@@ -23,10 +23,10 @@ const (
 
 var suits = [...]Suit{Spade, Diamond, Club, Heart}
 
-// Rank represents a cards value such as Ace or King
+// Rank represents a cards value such as Ace or King.
 type Rank uint8
 
-// Ranks with integer values
+// Ranks with integer values.
 const (
 	_ Rank = iota
 	Ace
@@ -49,7 +49,7 @@ const (
 	maxRank = King
 )
 
-// Card represents each card in a deck as an object
+// Card represents each card in a deck as an object.
 type Card struct {
 	Suit
 	Rank
@@ -62,7 +62,7 @@ func (c Card) String() string {
 	return fmt.Sprintf("%s of %ss", c.Rank.String(), c.Suit.String())
 }
 
-// New creates a new deck and applies any options passed in
+// New creates a new deck and applies any options passed in.
 func New(options ...func([]Card) []Card) []Card {
 	var cards []Card
 	for _, suit := range suits {
@@ -77,13 +77,13 @@ func New(options ...func([]Card) []Card) []Card {
 	return cards
 }
 
-// DefaultSort is the way a deck is sorted if no option is passed in
+// DefaultSort is the way a deck is sorted if no option is passed in.
 func DefaultSort(cards []Card) []Card {
 	sort.Slice(cards, Less(cards))
 	return cards
 }
 
-// Sort accepts a custom less function and will sort a deck accorindgly
+// Sort accepts a custom less function and will sort a deck accorindgly.
 func Sort(less func(cards []Card) func(i, j int) bool) func([]Card) []Card {
 	return func(cards []Card) []Card {
 		sort.Slice(cards, less(cards))
@@ -91,7 +91,7 @@ func Sort(less func(cards []Card) func(i, j int) bool) func([]Card) []Card {
 	}
 }
 
-// Less is the default compare function that is passed into DefaultSort
+// Less is the default compare function that is passed into DefaultSort.
 func Less(cards []Card) func(i, j int) bool {
 	return func(i, j int) bool {
 		return absRank(cards[i]) < absRank(cards[j])
@@ -104,7 +104,7 @@ func absRank(c Card) int {
 
 var shuffleRand = rand.New(rand.NewSource(time.Now().Unix()))
 
-// Shuffle randomizes the order of a deck
+// Shuffle randomizes the order of a deck.
 func Shuffle(cards []Card) []Card {
 	ret := make([]Card, len(cards))
 	perm := shuffleRand.Perm(len(cards))
@@ -114,7 +114,7 @@ func Shuffle(cards []Card) []Card {
 	return ret
 }
 
-// Jokers add n amount of jokers to a deck
+// Jokers add n amount of jokers to a deck.
 func Jokers(n int) func([]Card) []Card {
 	return func(cards []Card) []Card {
 		for i := 0; i < n; i++ {
@@ -129,7 +129,7 @@ func Jokers(n int) func([]Card) []Card {
 
 // Filter allows for the removal of certain cards from a deck
 // by taking in a filter and testing whether a card meets the
-// filters condition if a card fails the check then it is removed the deck
+// filter's condition. If a card passes the check it is removed.
 func Filter(f func(card Card) bool) func([]Card) []Card {
 	return func(cards []Card) []Card {
 		var ret []Card
@@ -142,7 +142,7 @@ func Filter(f func(card Card) bool) func([]Card) []Card {
 	}
 }
 
-// Deck creates n number of decks
+// Deck creates n number of decks.
 func Deck(n int) func([]Card) []Card {
 	return func(cards []Card) []Card {
 		var ret []Card
