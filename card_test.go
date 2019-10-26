@@ -14,11 +14,11 @@ func ExampleCard() {
 	fmt.Println(Card{Suit: Joker})
 
 	// Output:
-	// Ace of Hearts
-	// Two of Spades
-	// Six of Clubs
-	// Jack of Diamonds
-	// Joker
+	// Ace of Hearts ♥️
+	// Two of Spades ♠️
+	// Six of Clubs ♣️
+	// Jack of Diamonds ♦️
+	// Joker 🃏
 }
 
 func TestNew(t *testing.T) {

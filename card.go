@@ -56,10 +56,20 @@ type Card struct {
 }
 
 func (c Card) String() string {
-	if c.Suit == Joker {
-		return c.Suit.String()
+	var ret string
+	switch c.Suit {
+	case Spade:
+		ret = fmt.Sprintf("%s of %ss %s", c.Rank.String(), c.Suit.String(), "♠️")
+	case Diamond:
+		ret = fmt.Sprintf("%s of %ss %s", c.Rank.String(), c.Suit.String(), "♦️")
+	case Club:
+		ret = fmt.Sprintf("%s of %ss %s", c.Rank.String(), c.Suit.String(), "♣️")
+	case Heart:
+		ret = fmt.Sprintf("%s of %ss %s", c.Rank.String(), c.Suit.String(), "♥️")
+	case Joker:
+		return c.Suit.String() + " 🃏"
 	}
-	return fmt.Sprintf("%s of %ss", c.Rank.String(), c.Suit.String())
+	return ret
 }
 
 // New creates a new deck and applies any options passed in.
